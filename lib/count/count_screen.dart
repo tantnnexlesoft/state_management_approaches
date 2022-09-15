@@ -1,36 +1,8 @@
+
 import 'package:flutter/material.dart';
 
-import 'count/count_screen.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+class CountPage extends StatefulWidget {
+  CountPage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -44,10 +16,10 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _CountPageState createState() => _CountPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CountPageState extends State<CountPage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -58,6 +30,17 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+  void _reduceCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter--;
     });
   }
 
@@ -95,26 +78,36 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CountPage(title: 'Counter')),
-                );
-              },
-              child: Text(
-                'Counter',
-              ),
+            Text(
+              'You have pushed the button this many times:',
             ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                'List',
-              ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+
+          Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: FloatingActionButton(
+              onPressed: _incrementCounter,
+              child: Icon(Icons.add),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 10),
+            child: FloatingActionButton(
+              onPressed: _reduceCounter,
+              child: Icon(Icons.remove),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
